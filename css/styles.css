@@ -21,8 +21,9 @@
     --boreder-color: #eeeeee;
     --team-icon-color: #AFB1B8;
     --footer-socnetw-background: rgba(255, 255, 255, 0.1);
+    --backdrop-color: rgba(0, 0, 0, 0.2);
 
-    --animation-duration-and-function: 1000ms cubic-bezier(0.4, 0, 0.2, 1);
+    --animation-duration-and-function: 250ms cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 /* задаєм шрифт, фон та колір шрифта основної частини та скидаємо що непотрібно*/
@@ -103,8 +104,34 @@ img {
 }
 
 .nav-items .links {
-    color: var(--headers-nav-text-color)
+    position: relative;
+    color: var(--headers-nav-text-color);
 }
+
+.nav-items .links::after,
+.nav-items .links::after,
+.links.current-page::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    margin-bottom: -1px;
+    width: 0%;
+    height: 4px;
+
+    background: var(--accent-color);
+    border-radius: 2px;
+
+    transform: scaleX(0);
+    transition: transform var(--animation-duration-and-function);
+}
+
+.nav-items .links:hover::after,
+.nav-items .links:focus::after,
+.links.current-page::after {
+    width: 100%;
+    transform: scaleX(1);
+}
+
 
 .contacts-items .links {
     color: inherit;
@@ -483,6 +510,71 @@ img {
 .footer-socialnetw .link-socialnetwork:focus {
     background-color: var(--accent-color);
 }
+
+/* backdrop and modal */
+
+.backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 100;
+    background-color: var(--backdrop-color);
+
+    transition: opacity var(--animation-duration-and-function),
+        visibility var(--animation-duration-and-function);
+}
+
+
+
+.modal-window {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(1);
+
+    width: 528px;
+    height: 581px;
+
+    background-color: var(--footer-logo-hero-mainbackgr-color);
+
+    transition: transform var(--animation-duration-and-function);
+}
+
+.backdrop.is-hidden .modal-window {
+    transform: translate(-50%, -50%) scale(1.2);
+}
+
+.close-modal-button {
+    position: absolute;
+    right: 8px;
+    top: 8px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+
+    background-color: #ffffff;
+
+    transition: border-color var(--animation-duration-and-function);
+}
+
+.close-modal-button:hover,
+.close-modal-button:focus {
+    border-color: #000000;
+}
+
+.is-hidden {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+}
+
 
 /* PORTFOLIO PAGE */
 
